@@ -7,7 +7,7 @@ st.title("🎈 GIF looper")
 uploaded_files = st.file_uploader("Choose a GIF", type=["gif"], accept_multiple_files=True)
 
 if uploaded_files:
-    for uploaded_file in uploaded_files:
+    for index, uploaded_file in enumerate(uploaded_files):
         # Leggi i byte del file caricato
         bytes_data = uploaded_file.read()
         gif = Image.open(BytesIO(bytes_data))
@@ -22,7 +22,7 @@ if uploaded_files:
         frames = [frame.copy() for frame in ImageSequence.Iterator(gif)]
 
         # Modifica il numero di loop (esempio: 2 volte)
-        loop_count = st.number_input("Set loop count (0 for infinite)", min_value=0, value=2)
+        loop_count = st.number_input("Set loop count (0 for infinite)", min_value=0, value=2, key=f"loop_count_{index}")
 
         # Salva la GIF con il loop modificato in memoria
         output_gif = BytesIO()
